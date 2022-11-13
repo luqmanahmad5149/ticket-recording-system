@@ -1,5 +1,9 @@
 # Ticket Recording System
 
+### Install project locally
+
+1. git clone https://github.com/luqmanahmad5149/ticket-recording-system.git
+
 ### Project Setup
 
 1. install the dependencies
