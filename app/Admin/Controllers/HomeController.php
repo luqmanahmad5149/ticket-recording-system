@@ -3,32 +3,39 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ticket;
 use Encore\Admin\Controllers\Dashboard;
 use Encore\Admin\Layout\Column;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     public function index(Content $content)
     {
         return $content
-            ->title('Dashboard')
-            ->description('Description...')
-            ->row(Dashboard::title())
+            ->title('Summary')
+            ->description('Reports')
             ->row(function (Row $row) {
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::environment());
-                });
+                $tickets = DB::table('tickets')
+                ->select('currency', 'date', DB::raw('Count(*) as tickets'))
+                ->groupBy('date')
+                ->groupBy('currency')
+                ->get();
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::extensions());
-                });
+                $currencies = DB::table('tickets')
+                ->select('currency')
+                ->groupBy('currency')
+                ->get();
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::dependencies());
-                });
+                $data = [
+                    "title" => 'Weekly Tickets Summary',
+                    "tickets" => $tickets,
+                    "currencies" => $currencies,
+                ];
+                $row->column(5, view('admin.charts.bar', $data));
             });
     }
 }

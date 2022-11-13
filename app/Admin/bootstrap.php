@@ -18,4 +18,9 @@
  *
  */
 
+use Encore\Admin\Facades\Admin;
+
 Encore\Admin\Form::forget(['map', 'editor']);
+
+Admin::js('/vendor/chartjs/chart.min.js');
+Admin::js('/vendor/chartjs/chartjs-adapter-date-fns.bundle.min.js');
