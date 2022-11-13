@@ -32,10 +32,15 @@ Open your `.env` file and change the DATABASE options. You can start with SQLite
 
 1. Create a new MySQL database named `ticket_recording_system`
 
-2. you can run migrations to create database tables
+2. You can run migrations to create database tables
 
 ```shell
 php artisan migrate
+```
+3. Finally, run this to seed admin data
+
+```shell
+php artisan admin:install
 ```
 
 
